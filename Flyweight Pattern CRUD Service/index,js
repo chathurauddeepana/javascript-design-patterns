@@ -1,0 +1,16 @@
+const dbConnection = require('../databaseConnection');
+const FlyweightCRUDService = require('./flyweightCRUDService');
+
+
+const service = new FlyweightCRUDService();
+
+async function operations() {
+    const sharedData1 = { category: "Electronics", manufacturer: "CompanyA" };
+    const sharedData2 = { category: "Electronics", manufacturer: "CompanyB" };
+
+    await service.create({ name: "Item 1", data: "Some data" }, sharedData1);
+    await service.create({ name: "Item 2", data: "Some other data" }, sharedData1);  // Uses the same shared attributes as Item 1
+    await service.create({ name: "Item 3", data: "Different data" }, sharedData2);
+}
+
+operations();
